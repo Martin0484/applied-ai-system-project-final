@@ -140,3 +140,9 @@ Prompts:
 I learned that recommender systems rely on weights given to attributes
 to make decisions. I discovered that a song's match can be reduced to
 a single number.
+
+This project shows that I have gained alot of experience with AI and have found very useful ways of
+utilizing it. It also shows that I am now capable of applying my experience to create a useful
+program that can make someone's life by filtering though countless songs and only displaying the
+ones that would be most relevant to the user. And it gives me greater insight into the inner-workings
+of AI to know how it functions at a low level.

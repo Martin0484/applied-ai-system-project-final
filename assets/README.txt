@@ -90,6 +90,9 @@ However, it also gave me a flawed suggestion by telling me to structure the code
 difficult to read.
 
 This project shows that I have gained alot of experience with AI and have found very useful ways of
-utilizing it.
+utilizing it. It also shows that I am now capable of applying my experience to create a useful
+program that can make someone's life by filtering though countless songs and only displaying the
+ones that would be most relevant to the user. And it gives me greater insight into the inner-workings
+of AI to know how it functions at a low level.
 
 https://www.loom.com/share/bcf82027b5334317a54a27f08d35c9f0
