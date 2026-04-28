@@ -48,7 +48,16 @@ def main() -> None:
         print("No songs found in the dataset.")
         return
 
-    user_prefs4 = {"genre": "pop", "mood": "chill"}
+    genres = sorted({s.get("genre", "").strip().lower() for s in songs if s.get("genre")})
+    moods = sorted({s.get("mood", "").strip().lower() for s in songs if s.get("mood")})
+
+    print(f"Available genres: {', '.join(genres)}")
+    genre = input("Enter a genre: ").strip().lower()
+
+    print(f"Available moods: {', '.join(moods)}")
+    mood = input("Enter a mood: ").strip().lower()
+
+    user_prefs4 = {"genre": genre, "mood": mood}
 
     try:
         recommendations = recommend_songs(user_prefs4, songs, k=5)
