@@ -88,3 +88,8 @@ While testing my AI's reliability, I was surprised that it provided reliable ans
 AI gave me a helpful suggestion by telling me to incorporate a reliability check in the main.py file.
 However, it also gave me a flawed suggestion by telling me to structure the code in a way that makes it
 difficult to read.
+
+This project shows that I have gained alot of experience with AI and have found very useful ways of
+utilizing it.
+
+https://www.loom.com/share/bcf82027b5334317a54a27f08d35c9f0
