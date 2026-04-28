@@ -1,37 +1,75 @@
 """
 Command line runner for the Music Recommender Simulation.
-
-This file helps you quickly run and test your recommender.
-
-You will implement the functions in recommender.py:
-- load_songs
-- score_song
-- recommend_songs
 """
-
+import subprocess
+import sys
+from pathlib import Path
 from src.recommender import load_songs, recommend_songs
 
 
+def _reliability_check() -> bool:
+    try:
+        result = subprocess.run(
+            [sys.executable, "-m", "pytest", "-q", "tests/test_reliability.py"],
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode != 0:
+            print("Reliability tests failed. Not generating recommendations.\n")
+            print(result.stdout)
+            print(result.stderr)
+            return False
+        print("All reliability tests passed.\n")
+        return True
+    except FileNotFoundError:
+        print("Error: pytest not found. Install it with: pip install pytest")
+        return False
+    except Exception as e:
+        print(f"Unexpected error during reliability check: {e}")
+        return False
+
+
 def main() -> None:
-    songs = load_songs("data/songs.csv") 
+    if not _reliability_check():
+        return
 
-    # Starter example profile
-    user_prefs1 = {"genre": "pop", "mood": "happy", "energy": 0.8}
-    user_prefs2 = {"genre": "lofi", "mood": "chill", "energy": 0.8}
-    user_prefs3 = {"energy": 0.93, "tempo_bpm": 132, "valence": 0.77, "danceability": 0.88, "acousticness": 0.05}
-    user_prefs4 = {"genre": "lofi", "mood": "chill"}
-    user_prefs = {"genre": "rock", "mood": "energetic", "energy": 0.9}
+    csv_path = "data/songs.csv"
+    if not Path(csv_path).exists():
+        print(f"Error: CSV file not found at '{csv_path}'")
+        return
 
-    recommendations = recommend_songs(user_prefs4, songs, k=5)
+    try:
+        songs = load_songs(csv_path)
+    except Exception as e:
+        print(f"Error loading songs: {e}")
+        return
+
+    if not songs:
+        print("No songs found in the dataset.")
+        return
+
+    user_prefs4 = {"genre": "pop", "mood": "chill"}
+
+    try:
+        recommendations = recommend_songs(user_prefs4, songs, k=5)
+    except Exception as e:
+        print(f"Error generating recommendations: {e}")
+        return
+
+    if not recommendations:
+        print("No recommendations found for the given preferences.")
+        return
 
     print("\nTop recommendations:\n")
     for rec in recommendations:
-        # You decide the structure of each returned item.
-        # A common pattern is: (song, score, explanation)
-        song, score, explanation = rec
-        print(f"{song['title']} - Score: {score:.2f}")
-        print(f"Because: {explanation}")
-        print()
+        try:
+            song, score, explanation = rec
+            print(f"{song['title']} - Score: {score:.2f}")
+            print(f"Because: {explanation}")
+            print()
+        except (KeyError, ValueError) as e:
+            print(f"Error displaying recommendation: {e}")
+            continue
 
 
 if __name__ == "__main__":
